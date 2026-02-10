@@ -1,0 +1,254 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #252432;
+  overflow: hidden;
+}
+
+.btn {
+  position: relative;
+  width: 240px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: 2em;
+  transition: 0.5s;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #e50914;
+  /* border: 1px solid #fff; */
+}
+
+.btn:hover {
+  filter: drop-shadow(0 0 10px #e50914) drop-shadow(0 0 30px #e50914);
+  letter-spacing: 0.2em;
+  color: #fff;
+}
+
+.btn span {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: #e50914;
+  pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.btn:hover span {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.btn span:nth-child(even) {
+  transform-origin: top;
+}
+
+.btn:hover span:nth-child(even) {
+  transform-origin: bottom;
+}
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  let btns = document.querySelectorAll(".btn");
+  btns.forEach(function (btn) {
+    let spans = [];
+    for (let i = 0; i < 120; i++) {
+      let span = document.createElement("span");
+      span.style.left = `${i * 2}px`;
+      spans.push(span);
+      btn.appendChild(span);
+      let randomDealy = Math.random() * 1 + 0;
+      span.style.transitionDelay = randomDealy + "s";
+    }
+  });
+});
+
+
+
+
+
+
+
+
+galaxy////////////////////////////////////////////////
+
+
+Implementing custom animations like a "meteor shower" of stars or asteroids requires combining React state management with intricate CSS keyframe animations or a UI library designed for effects.
+Here is a conceptual example of the React components needed. This solution uses Tailwind CSS utility classes and a custom CSS file to manage the theme and animations.
+1. App.js (or your main component)
+This component manages the theme state and wraps the Navbar.
+jsx
+import React, { useState, useEffect } from 'react';
+import Navbar from './Navbar';
+import './App.css'; // Import the main CSS file
+
+function App() {
+  // Initialize theme from local storage or default to 'dark'
+  const [theme, setTheme] = useState(localStorage.getItem('appTheme') || 'dark');
+
+  useEffect(() => {
+    // Update the 'data-theme' attribute on the root html element
+    document.documentElement.setAttribute('data-theme', theme);
+    // Persist the theme choice in local storage
+    localStorage.setItem('appTheme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  return (
+    <div className="app-container">
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      {/* Rest of your application content will also respect the CSS variables */}
+    </div>
+  );
+}
+
+export default App;
+Use code with caution.
+
+2. Navbar.js
+This component renders the navigation links and the custom toggle button.
+jsx
+import React from 'react';
+import './Navbar.css'; // Import the navbar-specific CSS
+
+const Navbar = ({ theme, toggleTheme }) => {
+  return (
+    <nav className="navbar">
+      <div className="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button onClick={toggleTheme} className="theme-toggle-button">
+        {/* The visual effect container */}
+        <div className="toggle-visual-container">
+            {/* Stars/Asteroids will be generated here by the CSS animations */}
+            <span className="sr-only">Toggle {theme === 'dark' ? 'Light' : 'Dark'} Mode</span>
+        </div>
+      </button>
+    </nav>
+  );
+};
+
+export default Navbar;
+Use code with caution.
+
+3. App.css
+This file defines the global CSS variables and ensures the correct theme is applied to the application body.
+css
+/* Base variables for light mode */
+:root {
+  --navbar-bg: #fff;
+  --navbar-text: #000;
+  --toggle-icon-color: #f7d91d; /* Sun color */
+  --bg-stars: none; /* No stars/meteors by default */
+  --animation-type: asteroid; /* Default to asteroid for light theme */
+}
+
+/* Variables for dark mode, applied via the [data-theme="dark"] attribute */
+[data-theme="dark"] {
+  --navbar-bg: #1e1e1e;
+  --navbar-text: #fff;
+  --toggle-icon-color: #a0aec0; /* Star/Moon color */
+  --animation-type: star; /* Switch to star animation for dark theme */
+}
+
+.app-container {
+  transition: background-color 0.5s, color 0.5s;
+}
+Use code with caution.
+
+4. Navbar.css
+This file contains the core styling and the complex CSS keyframe animations for the visual effects. The use of CSS variables here allows the animation to change based on the theme.
+Note: The actual meteor shower effect requires a more robust approach, often using JavaScript or a library for random positioning and animation delays. The below CSS is a basic illustration of the animation concept.
+css
+.navbar {
+  background-color: var(--navbar-bg);
+  color: var(--navbar-text);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+/* ... existing nav link styling ... */
+
+.theme-toggle-button {
+  background: none;
+  border: 1px solid var(--toggle-icon-color);
+  cursor: pointer;
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden; /* Contains the 'meteor' animation */
+}
+
+.toggle-visual-container {
+    /* Apply background based on theme variable */
+    background: var(--bg-stars); 
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* This is where the magic happens: you would add more complex CSS/JS 
+       here to render the specific star/asteroid animations you want. 
+       A library like 
+Use code with caution.
+
+css
+Aceternity UI
+Use code with caution.
+
+css
+ provides pre-built components for this.
+    */
+}
+Use code with caution.
+
+This code provides the structure for a functional theme toggle and a foundation for adding your unique visual effects using CSS or a UI library.
+
+
+
+For your night mode sections, I would suggest a deep, contrasting color palette, while for your light mode sections, a clean, high-contrast palette works best to maintain readability and match the aesthetic of your existing navbar.
+Night Mode (Dark Theme)
+Building on the galaxy theme from your navbar image, deep blues and rich grays create a sophisticated, calming environment.
+Element	Color Suggestion	Purpose
+Background	#0A192F (Deep Navy/Slate)	The main canvas for your content. Darker than the navbar background for contrast.
+Primary Text	#E2E8F0 (Light Gray/Off-White)	Ensures high readability against the dark background.
+Accent Color	#66B2FF (Sky Blue) or #C77DFF (Soft Purple)	For links, buttons, and highlights, drawing inspiration from the galaxy colors.
+Card/Section Background	#1A202C (Dark Charcoal)	Slightly lighter than the main background to differentiate individual sections or cards.
+Light Mode (Light Theme)
+In light mode, the focus is on brightness and clarity, using a white or very light background with crisp, dark text.
+Element	Color Suggestion	Purpose
+Background	#FFFFFF (Pure White) or #F7FAFC (Very Light Gray)	A clean, bright base that mimics natural light.
+Primary Text	#1A202C (Dark Charcoal) or #000000 (Black)	Ensures excellent readability and contrast.
+Accent Color	#FFBF00 (Golden Yellow/Amber)	To represent the sun/asteroid theme, used for buttons and key highlights.
+Card/Section Background	#E2E8F0 (Light Gray)	A subtle contrast for dividing content sections.
+0
