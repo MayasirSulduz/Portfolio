@@ -1,120 +1,171 @@
-/* About section wrapper */
-.about-container {
-  /* min-height: 100vh; */
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  gap: 80px;
-  padding: 0 6rem;
-  padding-top: 60px;
-}
-#about {
-  min-height: 60vh;
+.about-section {
+  background: var(--bg);
 }
 
-/* Left side text section */
-.about {
-  max-width: 600px;
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.about-text-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* vertically center text block within the container */
+  gap: 30px;
 }
 
-.about-title {
-  font-size: 3.5rem;
-  font-weight: 600;
-  margin-bottom: 2.5rem;
+.about-card {
+  padding: 32px;
+}
+
+.about-heading {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: var(--accent);
 }
 
 .about-text {
-  font-size: 1rem;
-  line-height: 1.7;
-  margin-bottom: 1rem;
-  opacity: 0.9;
-}
-
-/* Experience block */
-.about-experience {
-  margin-top: 2.5rem;
-}
-
-.experience-title {
-  font-size: 1.6rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.company {
   font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.about-highlights {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.highlight-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight-number {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.highlight-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Timeline */
+.experience-container {
+  margin-top: 10px;
+}
+
+.timeline-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timeline-item {
+  padding: 24px;
+  position: relative;
+  border-left: 3px solid var(--accent);
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.timeline-company {
+  font-size: 1.2rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.timeline-role {
+  font-size: 1rem;
+  color: var(--accent);
   font-weight: 600;
 }
 
-.designation {
-  font-size: 0.95rem;
-  opacity: 0.85;
+.timeline-date {
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  font-weight: 600;
 }
 
-.duration {
-  font-size: 0.9rem;
-  opacity: 0.7;
-  margin-bottom: 0.8rem;
-}
-
-.experience-text {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  opacity: 0.85;
-}
-
-/* Right side image */
-.about-avatar {
-  flex-shrink: 0;
+.timeline-details {
+  list-style-type: none;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-details li {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  position: relative;
+  padding-left: 18px;
+}
+
+.timeline-details li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* Illustration wrapper */
+.about-illustration-wrapper {
+  display: flex;
   justify-content: center;
-  /* vertically center the image so it lines up with the text */
-  height: 100%;
+  position: sticky;
+  top: 100px;
 }
 
-.about-avatar img {
-  width: 320px;
-  max-width: 100%;
+.illustration-card {
+  padding: 20px;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+}
+
+.about-illustration {
+  width: 100%;
+  max-height: 420px;
   object-fit: contain;
-  width: 200%;
-  height: auto;
-  display: block;
-  border-radius: 50%;
-
+  border-radius: 16px;
 }
 
-/* -------------------- */
-/* Responsive styles */
-/* -------------------- */
-
-@media (max-width: 1024px) {
-  .about-container {
-    gap: 50px;
-    padding: 0 3rem;
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
   }
 
-  .about-avatar img {
-    width: 280px;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-container {
-    flex-direction: column-reverse;
-    text-align: center;
-    padding: 0 2rem;
-  }
-
-  .about {
-    max-width: 100%;
-  }
-
-  .about-avatar img {
-    width: 240px;
-    margin-bottom: 2rem;
+  .about-illustration-wrapper {
+    position: static;
+    order: -1;
   }
 }

@@ -1,34 +1,33 @@
 import Navbar from "./components/Navbar";
-import Home from "./components/Home"
+import Home from "./components/Home";
 import About from "./components/About";
 import Skills from "./components/Skills";
+import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 
 function App() {
-
     return (
-        <div className="container">
+        <div className="app-main-wrapper">
             <Navbar />
-
-            <section id="home" className="section">
+            <main>
                 <Home />
-            </section>
-
-            <section id="about" className="section">
                 <About />
-            </section>
-
-            <section id="skills" className="section">
                 <Skills />
-            </section>
-
-            <section id="contact" className="section">
+                <Projects />
                 <Contact />
-            </section>
+            </main>
+            <footer className="footer-bar">
+                <div className="container footer-content">
+                    <p>© {new Date().getFullYear()} Siddavatam Sulduz. All rights reserved.</p>
+                    <div className="footer-links">
+                        <a href="https://github.com/MayasirSulduz" target="_blank" rel="noreferrer">GitHub</a>
+                        <a href="https://www.linkedin.com/in/mayasir-sulduz" target="_blank" rel="noreferrer">LinkedIn</a>
+                        <a href="#home">Back to Top ↑</a>
+                    </div>
+                </div>
+            </footer>
         </div>
-    )
-
+    );
 }
-
 
 export default App;

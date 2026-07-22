@@ -1,68 +1,67 @@
-// function Skills() {
-//     return (
-//         <section id="skills" className="section">
-//             <h1>Skills Section</h1>
-//             <p>Add your skills content here.</p>
-//         </section>
-//     );
-// }
-
-// export default Skills;
-
-
-
-
-
-
-
-
-
-
+import skillsImg from "../assets/skills.png";
 import "../styling/Skills.css";
 
 function Skills() {
     const skillsData = {
         frontend: {
-            title: "Frontend",
-            skills: ["HTML5", "CSS3", "JavaScript", "React", "Redux"]
+            title: "Frontend Development",
+            icon: "⚡",
+            skills: ["HTML5", "CSS3", "JavaScript (ES6+)", "React.js", "Redux", "Vite"]
         },
         backend: {
-            title: "Backend",
-            skills: ["Python", "Flask", "Open CV techniques", "Numpy"]
+            title: "Backend & Vision",
+            icon: "🐍",
+            skills: ["Python", "Flask", "OpenCV", "NumPy"]
         },
         dataVisualization: {
-            title: "Data Visualization",
+            title: "Data & Dashboards",
+            icon: "📊",
             skills: ["Streamlit", "Gradio", "Grafana", "Prometheus"]
         },
         database: {
-            title: "Database",
-            skills: ["MySQL", "Mongo DB"]
+            title: "Database Systems",
+            icon: "🗄️",
+            skills: ["MySQL", "MongoDB"]
         },
         otherSkills: {
-            title: "Other Skills",
-            skills: ["API Integration", "Debugging", "Unit testing", "Azure CI/CD pipeline", "Git", "Docker"]
+            title: "Tools & DevOps",
+            icon: "🛠️",
+            skills: ["API Integration", "Debugging", "Unit Testing", "Azure CI/CD", "Git & GitHub", "Docker"]
         },
         softSkills: {
             title: "Soft Skills",
-            skills: ["Problem-solving", "Communication", "Teamwork", "Quick Learning", "Time Management"]
+            icon: "💡",
+            skills: ["Problem Solving", "Communication", "Team Collaboration", "Quick Learner", "Time Management"]
         }
     };
 
     return (
-        <section id="skills" className="skills section">
-            <div className="skills-container">
-                <div className="skills-image">
-                    <img src="src/assets/skills.png" alt="Skills Anime" />
-                </div>
-                <div className="skills-content">
-                    <h2 className="skills-title">Skills</h2>
-                    <div className="skills-grid">
+        <section id="skills" className="skills-section section">
+            <div className="container">
+                <h2 className="section-title">Technical Skills</h2>
+                <p className="section-subtitle">Core technologies, frameworks, and tools I work with every day</p>
+
+                <div className="skills-grid-container">
+                    <div className="skills-illustration-card glass-card">
+                        <img src={skillsImg} alt="Skills & Technologies Illustration" className="skills-img" />
+                        <div className="skills-banner">
+                            <h3>Continuous Growth</h3>
+                            <p>Constantly expanding my toolkit with modern web standard practices.</p>
+                        </div>
+                    </div>
+
+                    <div className="skills-categories-grid">
                         {Object.entries(skillsData).map(([key, category]) => (
-                            <div key={key} className="skill-category">
-                                <h3 className="category-title">{category.title}</h3>
-                                <div className="skill-list">
+                            <div key={key} className="skill-category-card glass-card">
+                                <div className="category-header">
+                                    <span className="category-icon">{category.icon}</span>
+                                    <h3 className="category-title">{category.title}</h3>
+                                </div>
+                                <div className="skill-badges-container">
                                     {category.skills.map((skill, index) => (
-                                        <span key={index} className="skill-badge">{skill}</span>
+                                        <span key={index} className="skill-badge-pill">
+                                            {skill}
+                                        </span>
                                     ))}
                                 </div>
                             </div>

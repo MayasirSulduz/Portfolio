@@ -1,106 +1,77 @@
-// function About() {
-//     return (
-//         <section id="about" className="section">
-//             <h1>About Section</h1>
-//             <p>Add your about content here.</p>
-//         </section>
-//     );
-// }
-
-// export default About;
-
-
-
-
-
-
-
-
-
-
+import aboutImg from "../assets/About.png";
 import "../styling/About.css";
 
 function About() {
     return (
-        <div className="about-container container">
+        <section id="about" className="about-section section">
+            <div className="container">
+                <h2 className="section-title">About Me</h2>
+                <p className="section-subtitle">Passionate about clean code, intuitive UI, and continuous learning</p>
 
-            {/* Left side – Text content */}
-            {/* <section id="about" className="about section">
-                <h2 className="about-title">About Me</h2>
+                <div className="about-grid">
+                    <div className="about-text-content">
+                        <div className="about-card glass-card">
+                            <h3 className="about-heading">Who I Am</h3>
+                            <p className="about-text">
+                                I am a dedicated Front-End Developer with a strong focus on building modern, high-performance, and user-centric web applications.
+                            </p>
+                            <p className="about-text">
+                                I thrive on solving complex UI challenges, optimizing web performance, and delivering clean, maintainable code using React and modern frontend technology ecosystems.
+                            </p>
 
-                <p className="about-text">
-                    I’m a front-end developer focused on building clean,
-                    reliable, and user-friendly web interfaces.
-                </p>
+                            <div className="about-highlights">
+                                <div className="highlight-item">
+                                    <span className="highlight-number">1.5+</span>
+                                    <span className="highlight-label">Years Experience</span>
+                                </div>
+                                <div className="highlight-item">
+                                    <span className="highlight-number">TCS</span>
+                                    <span className="highlight-label">Current Employer</span>
+                                </div>
+                                <div className="highlight-item">
+                                    <span className="highlight-number">10+</span>
+                                    <span className="highlight-label">Tech Skills</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <p className="about-text">
-                    I enjoy problem-solving, debugging, and working with
-                    modern web technologies to deliver thoughtful UI
-                    solutions that are easy to use and maintain.
-                </p>
+                        <div className="experience-container">
+                            <h3 className="timeline-title">Work Experience</h3>
+                            
+                            <div className="timeline">
+                                <div className="timeline-item glass-card">
+                                    <div className="timeline-dot"></div>
+                                    <div className="timeline-content">
+                                        <div className="timeline-header">
+                                            <div>
+                                                <h4 className="timeline-company">Tata Consultancy Services (TCS)</h4>
+                                                <p className="timeline-role">Front-End Developer</p>
+                                            </div>
+                                            <span className="timeline-date">Sept 2023 — Present</span>
+                                        </div>
+                                        <ul className="timeline-details">
+                                            <li>Engineering responsive, accessible React interfaces for enterprise applications.</li>
+                                            <li>Streamlining state management and API integration to ensure seamless data flow.</li>
+                                            <li>Performing rigorous code reviews, unit testing, and UI debugging for high quality delivery.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="about-experience">
-                    <h3 className="experience-title">Experience</h3>
-
-                    <p className="company">
-                        Tata Consultancy Services (TCS)
-                    </p>
-
-                    <p className="designation">
-                        Front-End Developer
-                    </p>
-
-                    <p className="duration">
-                        September 2023 — Present
-                    </p>
-
-                    <p className="experience-text">
-                        Contributing to UI development, testing, and ongoing
-                        product enhancements across multiple projects, with
-                        an emphasis on quality, usability, and maintainability.
-                    </p>
+                    <div className="about-illustration-wrapper">
+                        <div className="illustration-card glass-card">
+                            <img
+                                src={aboutImg}
+                                alt="Siddavatam Sulduz Illustration"
+                                className="about-illustration"
+                            />
+                        </div>
+                    </div>
                 </div>
-            </section> */}
-
-            <section id="about" class="about section">
-                <header class="about-header">
-                    <h2 class="about-title">About Me</h2>
-                </header>
-
-                <div class="about-content">
-                    <p class="about-text">
-                        I’m a front-end developer focused on building clean, reliable, and user-friendly web interfaces.
-                    </p>
-
-                    <p class="about-text">
-                        I enjoy problem-solving, debugging, and working with modern web technologies to deliver thoughtful UI solutions that are easy to use and maintain.
-                    </p>
-                </div>
-
-                <div class="about-experience">
-                    <h3 class="experience-title">Experience</h3>
-
-                    <article class="experience-item">
-                        <h4 class="company">Tata Consultancy Services (TCS)</h4>
-                        <p class="designation">Front-End Developer</p>
-                        <p class="duration">September 2023 — Present</p>
-                        <p class="experience-text">
-                            Contributing to UI development, testing, and ongoing product enhancements across multiple projects, with an emphasis on quality, usability, and maintainability.
-                        </p>
-                    </article>
-                </div>
-            </section>
-
-
-            {/* Right side – Anime / Illustration */}
-            <div className="about-avatar">
-                <img
-                    src="src/assets/About.png"
-                    alt="Anime Illustration"
-                />
             </div>
-
-        </div>
+        </section>
     );
 }
 
