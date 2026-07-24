@@ -4,6 +4,7 @@ import About from "./components/About";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
+import AIChatAssistant from "./components/AIChatAssistant";
 
 function App() {
     return (
@@ -16,6 +17,10 @@ function App() {
                 <Projects />
                 <Contact />
             </main>
+
+            {/* Standalone Interactive Feature */}
+            <AIChatAssistant />
+
             <footer className="footer-bar">
                 <div className="container footer-content">
                     <p>© {new Date().getFullYear()} Siddavatam Sulduz. All rights reserved.</p>

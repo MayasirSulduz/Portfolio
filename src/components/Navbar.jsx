@@ -28,9 +28,17 @@ const Navbar = () => {
           className="theme-toggle"
           onClick={() => toggleTheme()}
           aria-label="Toggle theme"
-          title={`Switch to ${theme === "dark-theme" ? "Light" : "Dark"} mode`}
+          title={
+            theme === "dark-theme"
+              ? "Switch to Cyberpunk Overdrive Mode ⚡"
+              : theme === "cyber-theme"
+              ? "Switch to Light Mode ☀️"
+              : "Switch to Dark Mode 🌙"
+          }
         >
-          <span className="icon">{theme === "dark-theme" ? "🌙" : "☀️"}</span>
+          <span className="icon">
+            {theme === "dark-theme" ? "🌙" : theme === "cyber-theme" ? "⚡" : "☀️"}
+          </span>
         </button>
       </div>
 

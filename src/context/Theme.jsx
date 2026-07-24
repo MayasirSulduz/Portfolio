@@ -15,15 +15,21 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getTheme());
 
   const toggleTheme = () => {
-    const newTheme =
-      theme === "dark-theme" ? "light-theme" : "dark-theme";
+    let newTheme = "dark-theme";
+    if (theme === "dark-theme") {
+      newTheme = "cyber-theme";
+    } else if (theme === "cyber-theme") {
+      newTheme = "light-theme";
+    } else {
+      newTheme = "dark-theme";
+    }
 
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
   };
 
   useEffect(() => {
-    document.body.classList.remove("dark-theme", "light-theme");
+    document.body.classList.remove("dark-theme", "light-theme", "cyber-theme");
     document.body.classList.add(theme);
   }, [theme]);
 

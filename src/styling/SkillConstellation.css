@@ -1,0 +1,56 @@
+.constellation-wrapper {
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.constellation-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.constellation-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.constellation-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.constellation-canvas {
+  width: 100%;
+  height: 360px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.constellation-canvas:active {
+  cursor: grabbing;
+}
+
+.constellation-tooltip {
+  position: absolute;
+  bottom: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 15px var(--accent-glow);
+  animation: fadeIn 0.2s ease-out;
+}

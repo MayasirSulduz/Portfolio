@@ -1,0 +1,120 @@
+.bug-hunter-root {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 3000;
+}
+
+.bug-launcher-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px var(--accent-glow);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+}
+
+.bug-launcher-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.bug-game-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+.bug-game-header {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  z-index: 10000;
+}
+
+.bug-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.bug-close-btn:hover {
+  color: var(--accent);
+}
+
+.bug-target {
+  position: fixed;
+  font-size: 2.2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  animation: bugWiggle 1s ease-in-out infinite alternate;
+  transition: transform 0.2s ease;
+  z-index: 10000;
+}
+
+.bug-target:hover {
+  transform: scale(1.3);
+}
+
+@keyframes bugWiggle {
+  0% {
+    transform: rotate(-15deg) translate(0, 0);
+  }
+  100% {
+    transform: rotate(15deg) translate(8px, -5px);
+  }
+}
+
+.bug-victory-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 36px;
+  text-align: center;
+  z-index: 10001;
+  max-width: 400px;
+}
+
+.victory-emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.bug-victory-modal h3 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.bug-victory-modal p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}

@@ -44,6 +44,39 @@ body.dark-theme {
   --glass-border: rgba(255, 255, 255, 0.08);
 }
 
+body.cyber-theme {
+  /* Cyberpunk Overdrive Mode */
+  --bg: #05070F;
+  --card-bg: #0C1020;
+  --card-hover: #141A33;
+  --text: #00F0FF;
+  --text-muted: #FF77BC;
+  --accent: #FF007F;
+  --accent-secondary: #00F0FF;
+  --accent-glow: rgba(255, 0, 127, 0.4);
+  --border-color: #FF007F;
+  --navbar-bg: rgba(5, 7, 15, 0.9);
+  --nav-text: #00F0FF;
+  --nav-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
+  --badge-bg: rgba(0, 240, 255, 0.15);
+  --badge-text: #00F0FF;
+  --glass-bg: rgba(12, 16, 32, 0.85);
+  --glass-border: rgba(255, 0, 127, 0.35);
+}
+
+body.cyber-theme::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 9999;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
 * {
   margin: 0;
   padding: 0;
