@@ -1,10 +1,26 @@
-import { useState, useContext, useMemo } from "react";
+import { useState, useContext, useMemo, useRef, useEffect } from "react";
 import "../styling/Navbar.css";
 import { ThemeContext } from "../context/Theme.jsx";
+import { usePet } from "../context/PetContext.jsx";
 
-const Navbar = () => {
+const Navbar = ({ onOpenHuskyViewer }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pawDropdownOpen, setPawDropdownOpen] = useState(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
+
+  const { isAtHome, goHome, comeBack, playBall, sayHello } = usePet();
+  const dropdownRef = useRef(null);
+
+  // Close paw dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setPawDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const particles = useMemo(() => {
     const count = 30;
@@ -70,6 +86,76 @@ const Navbar = () => {
       </div>
 
       <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+        {/* Paw symbol before Home */}
+        <li className="paw-nav-item" ref={dropdownRef}>
+          <button
+            className="paw-symbol-btn"
+            onClick={() => setPawDropdownOpen(!pawDropdownOpen)}
+            aria-label="Leo Pet Menu"
+            title="Leo 3D Pet Controls 🐾"
+          >
+            🐾 <span className="paw-label">Leo</span>
+          </button>
+
+          {pawDropdownOpen && (
+            <div className="paw-dropdown-menu">
+              <div className="paw-dropdown-header">
+                <span>🐕 Leo Pet Controls</span>
+              </div>
+              <button
+                className="paw-dropdown-item"
+                onClick={() => {
+                  goHome();
+                  setPawDropdownOpen(false);
+                }}
+              >
+                <span className="paw-item-icon">🏠</span> 1. Leo go home
+              </button>
+              <button
+                className={`paw-dropdown-item ${!isAtHome ? "disabled" : "active-comeback"}`}
+                disabled={!isAtHome}
+                onClick={() => {
+                  if (isAtHome) {
+                    comeBack();
+                    setPawDropdownOpen(false);
+                  }
+                }}
+              >
+                <span className="paw-item-icon">🐕</span> 2. Come back Leo
+              </button>
+              <button
+                className="paw-dropdown-item"
+                onClick={() => {
+                  playBall();
+                  setPawDropdownOpen(false);
+                }}
+              >
+                <span className="paw-item-icon">⚽</span> 3. Leo play
+              </button>
+              <button
+                className="paw-dropdown-item"
+                onClick={() => {
+                  sayHello();
+                  setPawDropdownOpen(false);
+                }}
+              >
+                <span className="paw-item-icon">🔊</span> 4. Hello Leo
+              </button>
+              <div className="paw-dropdown-divider" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', margin: '0.4rem 0' }}></div>
+              <button
+                className="paw-dropdown-item model-download-item"
+                onClick={() => {
+                  if (onOpenHuskyViewer) onOpenHuskyViewer();
+                  setPawDropdownOpen(false);
+                }}
+                style={{ color: '#38bdf8', fontWeight: 'bold' }}
+              >
+                <span className="paw-item-icon">📦</span> 5. 3D Model Asset (.GLB/.GLTF)
+              </button>
+            </div>
+          )}
+        </li>
+
         <li onClick={() => setMenuOpen(false)}>
           <a href="#home">Home</a>
         </li>
