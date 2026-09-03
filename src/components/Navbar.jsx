@@ -86,7 +86,7 @@ const Navbar = ({ onOpenHuskyViewer }) => {
       </div>
 
       <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-        {/* Paw symbol before Home */}
+        {/* FIRST NAV ITEM: Leo 🐾 Controls Button */}
         <li className="paw-nav-item" ref={dropdownRef}>
           <button
             className="paw-symbol-btn"
@@ -112,13 +112,10 @@ const Navbar = ({ onOpenHuskyViewer }) => {
                 <span className="paw-item-icon">🏠</span> 1. Leo go home
               </button>
               <button
-                className={`paw-dropdown-item ${!isAtHome ? "disabled" : "active-comeback"}`}
-                disabled={!isAtHome}
+                className="paw-dropdown-item active-comeback"
                 onClick={() => {
-                  if (isAtHome) {
-                    comeBack();
-                    setPawDropdownOpen(false);
-                  }
+                  comeBack();
+                  setPawDropdownOpen(false);
                 }}
               >
                 <span className="paw-item-icon">🐕</span> 2. Come back Leo
@@ -156,6 +153,7 @@ const Navbar = ({ onOpenHuskyViewer }) => {
           )}
         </li>
 
+        {/* SECOND NAV ITEM: Home */}
         <li onClick={() => setMenuOpen(false)}>
           <a href="#home">Home</a>
         </li>

@@ -19,11 +19,7 @@ export default function PetLeo() {
     helloTrigger,
     isPlaying,
     isAtHome,
-    isResting,
   } = usePet();
-
-  // Floating Zzz particles state for sleeping animation
-  const [zzzList, setZzzList] = useState([]);
 
   const stateRef = useRef({
     petMode,
@@ -54,27 +50,6 @@ export default function PetLeo() {
     }
   }, [isPlaying, setPetMode]);
 
-  // Zzz floating animation loop when resting
-  useEffect(() => {
-    if (!isResting) {
-      setZzzList([]);
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setZzzList((prev) => [
-        ...prev.slice(-4),
-        {
-          id: Date.now() + Math.random(),
-          size: Math.random() * 0.4 + 0.9,
-          offsetX: (Math.random() - 0.5) * 30,
-        },
-      ]);
-    }, 900);
-
-    return () => clearInterval(interval);
-  }, [isResting]);
-
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -88,7 +63,7 @@ export default function PetLeo() {
       0.1,
       1000
     );
-    camera.position.set(0, 0, 14);
+    camera.position.set(0, 1.2, 14);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -97,7 +72,7 @@ export default function PetLeo() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // --- LIGHTING ---
+    // --- LIGHTING SYSTEM ---
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     scene.add(ambientLight);
 
@@ -119,6 +94,8 @@ export default function PetLeo() {
       headGroup: null,
       eyeL: null,
       eyeR: null,
+      lidL: null,
+      lidR: null,
       earL: null,
       earR: null,
       tailGroup: null,
@@ -127,6 +104,8 @@ export default function PetLeo() {
       legBL: null,
       legBR: null,
       bodyMesh: null,
+      tongueMesh: null,
+      shadowPlane: null,
     };
 
     // Load Expressive Husky GLB model
@@ -144,6 +123,10 @@ export default function PetLeo() {
         nodesRef.headGroup = huskyModel.getObjectByName('HeadGroup');
         nodesRef.eyeL = huskyModel.getObjectByName('Eye_Left');
         nodesRef.eyeR = huskyModel.getObjectByName('Eye_Right');
+        
+        if (nodesRef.eyeL) nodesRef.lidL = nodesRef.eyeL.getObjectByName('Eyelid_Closed');
+        if (nodesRef.eyeR) nodesRef.lidR = nodesRef.eyeR.getObjectByName('Eyelid_Closed');
+
         nodesRef.earL = huskyModel.getObjectByName('Ear_Left');
         nodesRef.earR = huskyModel.getObjectByName('Ear_Right');
         nodesRef.tailGroup = huskyModel.getObjectByName('TailGroup');
@@ -152,6 +135,8 @@ export default function PetLeo() {
         nodesRef.legBL = huskyModel.getObjectByName('Leg_BackLeft');
         nodesRef.legBR = huskyModel.getObjectByName('Leg_BackRight');
         nodesRef.bodyMesh = huskyModel.getObjectByName('Torso_Main');
+        nodesRef.tongueMesh = huskyModel.getObjectByName('Tongue_Mesh');
+        nodesRef.shadowPlane = huskyModel.getObjectByName('Soft_Shadow_Plane');
       },
       undefined,
       (err) => {
@@ -211,7 +196,7 @@ export default function PetLeo() {
       const dx = Math.abs(e.clientX - stateRef.current.prevMousePos.x);
       const dy = Math.abs(e.clientY - stateRef.current.prevMousePos.y);
 
-      if (dx > 3 || dy > 3) {
+      if (dx > 2 || dy > 2) {
         stateRef.current.lastMouseMoveTime = now;
         stateRef.current.isMouseMoving = true;
         stateRef.current.prevMousePos = { x: e.clientX, y: e.clientY };
@@ -233,13 +218,14 @@ export default function PetLeo() {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', handleResize);
 
-    // --- REALISTIC RUNNING LEGS & CUTE SLEEPING POSE ---
+    // --- ANIMATION LOOP ENGINE ---
     let clock = new THREE.Clock();
     let animFrameId = null;
     let ballVel = new THREE.Vector3(0, 0, 0);
     let ballPos = new THREE.Vector3(0, 0, 0);
 
     let smoothFacingAngleY = 0;
+    let lastFacingAngleY = 0;
     let animPhase = 0;
     let blinkTimer = 0;
     let isBlinking = false;
@@ -251,24 +237,16 @@ export default function PetLeo() {
       const delta = Math.min(rawDelta, 0.033);
       const time = clock.getElapsedTime();
       const currentMode = stateRef.current.petMode;
-      const now = Date.now();
       const bounds = getVisibleBounds();
 
-      // Natural eye blinking
+      // Eye Blinking Timer
       blinkTimer += delta;
-      if (blinkTimer > 3.8 && !isBlinking) {
+      if (blinkTimer > 3.2 && !isBlinking) {
         isBlinking = true;
       }
-      if (blinkTimer > 4.0) {
+      if (blinkTimer > 3.4) {
         isBlinking = false;
         blinkTimer = Math.random() * 1.5;
-      }
-
-      if (
-        currentMode === 'FOLLOWING' &&
-        now - stateRef.current.lastMouseMoveTime > 5000
-      ) {
-        setPetMode('IDLE_REST');
       }
 
       if (currentMode === 'PLAYING') {
@@ -299,7 +277,9 @@ export default function PetLeo() {
       } else if (currentMode === 'PLAYING') {
         targetPos.copy(ballPos);
       } else {
+        // Position target right at mouse tip
         targetPos.copy(stateRef.current.mouse3D);
+        targetPos.y -= 0.35;
         targetPos.z = 0;
       }
 
@@ -308,6 +288,7 @@ export default function PetLeo() {
 
       const distToTarget = leoGroup.position.distanceTo(targetPos);
 
+      // INVISIBLE WHEN AT HOME INSIDE DOGHOUSE!
       if (currentMode === 'AT_HOME') {
         leoGroup.scale.set(0.001, 0.001, 0.001);
       } else {
@@ -318,160 +299,124 @@ export default function PetLeo() {
         setPetMode('AT_HOME');
       }
 
-      // Screen positions for Zzz text
+      // Screen positions
       const screenVector = leoGroup.position.clone().project(camera);
       const screenX = ((screenVector.x + 1) * window.innerWidth) / 2;
       const screenY = ((-screenVector.y + 1) * window.innerHeight) / 2;
       stateRef.current.currentScreenPos = { x: screenX, y: screenY };
 
-      const { huskyModel, headGroup, eyeL, eyeR, earL, earR, tailGroup, legFL, legFR, legBL, legBR, bodyMesh } = nodesRef;
+      const { huskyModel, headGroup, eyeL, eyeR, lidL, lidR, earL, earR, tailGroup, legFL, legFR, legBL, legBR, bodyMesh, tongueMesh, shadowPlane } = nodesRef;
 
-      const isRunning = distToTarget > 0.4 && currentMode !== 'IDLE_REST' && currentMode !== 'AT_HOME';
+      const isRunning = distToTarget > 0.35 && currentMode !== 'AT_HOME';
 
       if (huskyModel) {
+        const proxFactor = Math.max(0, 1 - distToTarget / 6.0);
+        const dynamicTailSpeed = 4.0 + proxFactor * 16.0;
+        const dynamicTailAmp = 0.25 + proxFactor * 0.35;
+
+        // Ground shadow
+        if (shadowPlane) {
+          shadowPlane.scale.set(1, 1, 1);
+        }
+
+        // Open eyelids
+        if (lidL) lidL.visible = false;
+        if (lidR) lidR.visible = false;
+
+        // Cute Tongue Panting Effect!
+        if (tongueMesh) {
+          tongueMesh.position.y = -0.20 + Math.sin(time * 8) * 0.015;
+        }
+
+        // Eye blinking
+        const eyeScaleY = isBlinking ? 0.08 : 1.0;
+        if (eyeL) eyeL.scale.y = THREE.MathUtils.lerp(eyeL.scale.y, eyeScaleY, 0.35);
+        if (eyeR) eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, eyeScaleY, 0.35);
+
         if (isRunning) {
           const dir = new THREE.Vector3().subVectors(targetPos, leoGroup.position).normalize();
-          const runSpeed = 7.5;
+          const runSpeed = 10.5;
 
           leoGroup.position.addScaledVector(dir, Math.min(distToTarget, runSpeed * delta));
           leoGroup.position.x = THREE.MathUtils.clamp(leoGroup.position.x, bounds.minX, bounds.maxX);
           leoGroup.position.y = THREE.MathUtils.clamp(leoGroup.position.y, bounds.minY, bounds.maxY);
 
-          // Face movement direction smoothly
           const targetFacingAngle = Math.atan2(dir.x, dir.y);
-          smoothFacingAngleY = lerpAngle(smoothFacingAngleY, targetFacingAngle, 10 * delta);
+          smoothFacingAngleY = lerpAngle(smoothFacingAngleY, targetFacingAngle, 14 * delta);
+
+          const angularVel = (smoothFacingAngleY - lastFacingAngleY) / delta;
+          lastFacingAngleY = smoothFacingAngleY;
+
           huskyModel.rotation.y = smoothFacingAngleY;
-          huskyModel.rotation.x = THREE.MathUtils.lerp(huskyModel.rotation.x, 0.1, 6 * delta);
-          huskyModel.position.y = 0; // Zero vertical hopping for smooth running!
+          huskyModel.rotation.z = THREE.MathUtils.lerp(huskyModel.rotation.z, THREE.MathUtils.clamp(-angularVel * 0.08, -0.25, 0.25), 8 * delta);
+          huskyModel.rotation.x = THREE.MathUtils.lerp(huskyModel.rotation.x, 0.05, 8 * delta);
+          huskyModel.position.y = 0;
 
-          // High-frequency alternating 4-leg running stride
-          animPhase += delta * 22;
-          const stride = Math.sin(animPhase) * 0.75;
+          // Leg strides
+          animPhase += delta * 26;
+          const stride = Math.sin(animPhase) * 0.72;
 
-          // Leg swing around top hip joints
-          if (legFR) {
-            legFR.rotation.x = stride;
-            legFR.rotation.z = 0;
-          }
-          if (legFL) {
-            legFL.rotation.x = -stride;
-            legFL.rotation.z = 0;
-          }
-          if (legBR) {
-            legBR.rotation.x = -stride;
-            legBR.rotation.z = 0;
-          }
-          if (legBL) {
-            legBL.rotation.x = stride;
-            legBL.rotation.z = 0;
-          }
+          if (legFR) legFR.rotation.x = stride;
+          if (legFL) legFL.rotation.x = -stride;
+          if (legBR) legBR.rotation.x = -stride;
+          if (legBL) legBL.rotation.x = -stride;
 
           if (headGroup) {
-            headGroup.position.set(0, 0.68, 0.62);
+            headGroup.position.set(0, 0.60, 0.62);
             headGroup.rotation.set(0, 0, 0);
           }
 
-          // Blinking / Eye scale
-          const eyeScaleY = isBlinking ? 0.08 : 1.0;
-          if (eyeL) eyeL.scale.y = THREE.MathUtils.lerp(eyeL.scale.y, eyeScaleY, 0.3);
-          if (eyeR) eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, eyeScaleY, 0.3);
-
           if (tailGroup) {
-            tailGroup.rotation.z = Math.sin(animPhase * 2) * 0.45;
+            tailGroup.rotation.z = Math.sin(animPhase * 2) * dynamicTailAmp;
           }
         } else {
-          if (currentMode === 'IDLE_REST') {
-            // ADORABLE COZY SLEEPING PUPPY POSE
-            smoothFacingAngleY = lerpAngle(smoothFacingAngleY, Math.PI / 2.5, 0.08);
-            huskyModel.rotation.y = smoothFacingAngleY;
-            huskyModel.rotation.x = THREE.MathUtils.lerp(huskyModel.rotation.x, 0.15, 0.08);
-            huskyModel.position.y = THREE.MathUtils.lerp(huskyModel.position.y, -0.2, 0.08);
+          // --- NATURAL 3D STANDING VIEW ---
+          huskyModel.rotation.z = THREE.MathUtils.lerp(huskyModel.rotation.z, 0, 8 * delta);
+          huskyModel.rotation.x = THREE.MathUtils.lerp(huskyModel.rotation.x, 0.05, 8 * delta);
+          huskyModel.position.y = THREE.MathUtils.lerp(huskyModel.position.y, 0, 8 * delta);
+          lastFacingAngleY = smoothFacingAngleY;
 
-            // Head resting down snugly on front paws
-            if (headGroup) {
-              headGroup.position.x = THREE.MathUtils.lerp(headGroup.position.x, 0.1, 0.08);
-              headGroup.position.y = THREE.MathUtils.lerp(headGroup.position.y, 0.25, 0.08);
-              headGroup.position.z = THREE.MathUtils.lerp(headGroup.position.z, 0.45, 0.08);
-              headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, 0.25, 0.08);
-              headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, -0.35, 0.08);
-              headGroup.rotation.z = THREE.MathUtils.lerp(headGroup.rotation.z, 0.15, 0.08);
-            }
+          smoothFacingAngleY = lerpAngle(smoothFacingAngleY, 0, 6 * delta);
+          huskyModel.rotation.y = smoothFacingAngleY;
 
-            // Eyes softly closed in sleep
-            if (eyeL) eyeL.scale.y = THREE.MathUtils.lerp(eyeL.scale.y, 0.08, 0.2);
-            if (eyeR) eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, 0.08, 0.2);
+          if (headGroup) {
+            headGroup.position.set(0, 0.60, 0.62);
+            headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, -0.05, 6 * delta);
+            headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, 0, 6 * delta);
+            headGroup.rotation.z = Math.sin(time * 2.5) * 0.08;
+          }
 
-            // Legs folded comfortably under belly like a cozy sleeping pup
-            if (legFR) {
-              legFR.rotation.x = THREE.MathUtils.lerp(legFR.rotation.x, Math.PI / 2.2, 0.08);
-              legFR.rotation.z = THREE.MathUtils.lerp(legFR.rotation.z, 0.3, 0.08);
-            }
-            if (legFL) {
-              legFL.rotation.x = THREE.MathUtils.lerp(legFL.rotation.x, Math.PI / 2.2, 0.08);
-              legFL.rotation.z = THREE.MathUtils.lerp(legFL.rotation.z, -0.3, 0.08);
-            }
-            if (legBR) {
-              legBR.rotation.x = THREE.MathUtils.lerp(legBR.rotation.x, Math.PI / 2.2, 0.08);
-              legBR.rotation.z = THREE.MathUtils.lerp(legBR.rotation.z, 0.3, 0.08);
-            }
-            if (legBL) {
-              legBL.rotation.x = THREE.MathUtils.lerp(legBL.rotation.x, Math.PI / 2.2, 0.08);
-              legBL.rotation.z = THREE.MathUtils.lerp(legBL.rotation.z, -0.3, 0.08);
-            }
+          if (earL) earL.rotation.z = -0.16 + Math.sin(time * 5) * 0.06;
+          if (earR) earR.rotation.z = 0.16 - Math.sin(time * 5) * 0.06;
 
-            // Tail wrapped around side
-            if (tailGroup) {
-              tailGroup.rotation.x = THREE.MathUtils.lerp(tailGroup.rotation.x, 0.7, 0.08);
-              tailGroup.rotation.y = THREE.MathUtils.lerp(tailGroup.rotation.y, -0.5, 0.08);
-            }
+          // Standing straight on paws
+          if (legFR) {
+            legFR.rotation.x = THREE.MathUtils.lerp(legFR.rotation.x, 0, 6 * delta);
+            legFR.rotation.z = THREE.MathUtils.lerp(legFR.rotation.z, 0, 6 * delta);
+          }
+          if (legFL) {
+            legFL.rotation.x = THREE.MathUtils.lerp(legFL.rotation.x, 0, 6 * delta);
+            legFL.rotation.z = THREE.MathUtils.lerp(legFL.rotation.z, 0, 6 * delta);
+          }
+          if (legBR) {
+            legBR.rotation.x = THREE.MathUtils.lerp(legBR.rotation.x, 0, 6 * delta);
+            legBR.rotation.z = THREE.MathUtils.lerp(legBR.rotation.z, 0, 6 * delta);
+          }
+          if (legBL) {
+            legBL.rotation.x = THREE.MathUtils.lerp(legBL.rotation.x, 0, 6 * delta);
+            legBL.rotation.z = THREE.MathUtils.lerp(legBL.rotation.z, 0, 6 * delta);
+          }
 
-            // Gentle breathing motion
-            if (bodyMesh) {
-              bodyMesh.scale.y = 0.85 + Math.sin(time * 2) * 0.035;
-            }
-          } else {
-            // Standing Idle facing camera neatly
-            smoothFacingAngleY = lerpAngle(smoothFacingAngleY, 0, 6 * delta);
-            huskyModel.rotation.y = smoothFacingAngleY;
-            huskyModel.rotation.x = THREE.MathUtils.lerp(huskyModel.rotation.x, 0.1, 6 * delta);
-            huskyModel.position.y = THREE.MathUtils.lerp(huskyModel.position.y, 0, 8 * delta);
+          // Wagging tail happily
+          if (tailGroup) {
+            tailGroup.rotation.z = Math.sin(time * dynamicTailSpeed) * dynamicTailAmp;
+            tailGroup.rotation.x = THREE.MathUtils.lerp(tailGroup.rotation.x, 0, 6 * delta);
+            tailGroup.rotation.y = THREE.MathUtils.lerp(tailGroup.rotation.y, 0, 6 * delta);
+          }
 
-            if (headGroup) {
-              headGroup.position.set(0, 0.68, 0.62);
-              headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, 0, 6 * delta);
-              headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, 0, 6 * delta);
-              headGroup.rotation.z = Math.sin(time * 2.5) * 0.08;
-            }
-
-            if (earL) earL.rotation.z = -0.16 + Math.sin(time * 5) * 0.06;
-            if (earR) earR.rotation.z = 0.16 - Math.sin(time * 5) * 0.06;
-
-            const eyeScaleY = isBlinking ? 0.08 : 1.0;
-            if (eyeL) eyeL.scale.y = THREE.MathUtils.lerp(eyeL.scale.y, eyeScaleY, 0.35);
-            if (eyeR) eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, eyeScaleY, 0.35);
-
-            if (legFR) {
-              legFR.rotation.x = THREE.MathUtils.lerp(legFR.rotation.x, 0, 6 * delta);
-              legFR.rotation.z = THREE.MathUtils.lerp(legFR.rotation.z, 0, 6 * delta);
-            }
-            if (legFL) {
-              legFL.rotation.x = THREE.MathUtils.lerp(legFL.rotation.x, 0, 6 * delta);
-              legFL.rotation.z = THREE.MathUtils.lerp(legFL.rotation.z, 0, 6 * delta);
-            }
-            if (legBR) {
-              legBR.rotation.x = THREE.MathUtils.lerp(legBR.rotation.x, 0, 6 * delta);
-              legBR.rotation.z = THREE.MathUtils.lerp(legBR.rotation.z, 0, 6 * delta);
-            }
-            if (legBL) {
-              legBL.rotation.x = THREE.MathUtils.lerp(legBL.rotation.x, 0, 6 * delta);
-              legBL.rotation.z = THREE.MathUtils.lerp(legBL.rotation.z, 0, 6 * delta);
-            }
-
-            if (tailGroup) {
-              tailGroup.rotation.z = Math.sin(time * 3.5) * 0.28;
-              tailGroup.rotation.x = THREE.MathUtils.lerp(tailGroup.rotation.x, 0, 6 * delta);
-              tailGroup.rotation.y = THREE.MathUtils.lerp(tailGroup.rotation.y, 0, 6 * delta);
-            }
+          // Gentle breathing motion
+          if (bodyMesh) {
+            bodyMesh.scale.y = 0.85 + Math.sin(time * 2.2) * 0.025;
           }
         }
 
@@ -500,8 +445,6 @@ export default function PetLeo() {
     };
   }, []);
 
-  const screenPos = stateRef.current.currentScreenPos;
-
   return (
     <>
       {/* 3D WebGL Canvas Layer */}
@@ -517,38 +460,6 @@ export default function PetLeo() {
           zIndex: 9999,
         }}
       />
-
-      {/* Floating Animated Zzz... Labels when Sleeping */}
-      {isResting && (
-        <div
-          style={{
-            position: 'fixed',
-            left: `${screenPos.x + 15}px`,
-            top: `${screenPos.y - 45}px`,
-            pointerEvents: 'none',
-            zIndex: 10000,
-          }}
-        >
-          {zzzList.map((z) => (
-            <div
-              key={z.id}
-              style={{
-                position: 'absolute',
-                left: `${z.offsetX}px`,
-                bottom: 0,
-                fontSize: `${1.1 * z.size}rem`,
-                fontWeight: 800,
-                fontFamily: 'var(--font-heading, sans-serif)',
-                color: '#38bdf8',
-                textShadow: '0 2px 8px rgba(0,0,0,0.6), 0 0 12px rgba(56,189,248,0.8)',
-                animation: 'floatZzz 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
-              }}
-            >
-              Z<span style={{ fontSize: '0.75em' }}>z</span><span style={{ fontSize: '0.55em' }}>z</span>...
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* 2D Dog House Image Layer */}
       <div
@@ -576,27 +487,6 @@ export default function PetLeo() {
           }}
         />
       </div>
-
-      <style>{`
-        @keyframes floatZzz {
-          0% {
-            opacity: 0;
-            transform: translateY(0) scale(0.6);
-          }
-          20% {
-            opacity: 1;
-            transform: translateY(-15px) scale(1);
-          }
-          80% {
-            opacity: 0.8;
-            transform: translateY(-55px) scale(1.1);
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-80px) scale(1.2);
-          }
-        }
-      `}</style>
     </>
   );
 }

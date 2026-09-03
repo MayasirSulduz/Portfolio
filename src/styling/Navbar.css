@@ -216,6 +216,8 @@ body:not(.dark-theme) .navbar .sky-particle {
 /* --- PAW SYMBOL & LEO DROPDOWN STYLES --- */
 .paw-nav-item {
   position: relative;
+  order: -1;
+  margin-right: 6px;
 }
 
 .paw-symbol-btn {

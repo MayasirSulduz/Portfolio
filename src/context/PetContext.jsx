@@ -16,11 +16,9 @@ export const PetProvider = ({ children }) => {
   }, []);
 
   const comeBack = useCallback(() => {
-    if (petMode === 'AT_HOME' || petMode === 'GOING_HOME') {
-      setPetMode('FOLLOWING');
-      huskyAudio.playYipSound();
-    }
-  }, [petMode]);
+    setPetMode('FOLLOWING');
+    huskyAudio.playYipSound();
+  }, []);
 
   const playBall = useCallback(() => {
     if (petMode !== 'GOING_HOME' && petMode !== 'AT_HOME') {
