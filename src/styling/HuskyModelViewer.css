@@ -105,7 +105,7 @@
 
 .husky-viewport-container {
   position: relative;
-  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+  background: #0f172a;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   height: 420px;
@@ -218,7 +218,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  background: #0369a1;
   color: #ffffff;
   padding: 0.75rem 1rem;
   border-radius: 10px;
@@ -232,7 +232,7 @@
 .husky-btn-primary:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
-  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+  background: #0284c7;
 }
 
 .husky-btn-secondary {

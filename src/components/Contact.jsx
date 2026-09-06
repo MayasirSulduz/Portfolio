@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "../styling/Contact.css";
 import InboxIcon from "../assets/icons/InboxIcon";
-import PhoneIcon from "../assets/icons/PhoneIcon";
 import LocationAlt2Icon from "../assets/icons/LocationAlt2Icon";
 import contactImg from "../assets/contact.png";
 
@@ -13,20 +12,39 @@ function Contact() {
         message: ""
     });
     const [submitted, setSubmitted] = useState(false);
+    const [isSending, setIsSending] = useState(false);
+    const [sendError, setSendError] = useState("");
     const [copyStatus, setCopyStatus] = useState("");
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.name || !formData.email || !formData.message) return;
-        setSubmitted(true);
-        setTimeout(() => {
-            setSubmitted(false);
+        setIsSending(true);
+        setSendError("");
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                const result = await response.json().catch(() => ({}));
+                throw new Error(result.error || "Unable to send your message.");
+            }
+
+            setSubmitted(true);
             setFormData({ name: "", email: "", subject: "", message: "" });
-        }, 4000);
+        } catch (error) {
+            setSendError(error.message);
+        } finally {
+            setIsSending(false);
+        }
     };
 
     const copyToClipboard = (text, label) => {
@@ -56,17 +74,6 @@ function Contact() {
                             <div className="info-text">
                                 <h3>Email</h3>
                                 <p>shaiksulduz238@gmail.com</p>
-                                <span className="click-copy-hint">Click to copy</span>
-                            </div>
-                        </div>
-
-                        <div className="info-card glass-card" onClick={() => copyToClipboard("+919493662836", "Phone number")}>
-                            <div className="info-icon">
-                                <PhoneIcon />
-                            </div>
-                            <div className="info-text">
-                                <h3>Phone</h3>
-                                <p>+91 9493662836</p>
                                 <span className="click-copy-hint">Click to copy</span>
                             </div>
                         </div>
@@ -149,8 +156,10 @@ function Contact() {
                                         ></textarea>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary submit-btn">
-                                        Send Message
+                                    {sendError && <p className="form-error" role="alert">{sendError}</p>}
+
+                                    <button type="submit" className="btn btn-primary submit-btn" disabled={isSending}>
+                                        {isSending ? "Sending..." : "Send Message"}
                                     </button>
                                 </form>
                             )}

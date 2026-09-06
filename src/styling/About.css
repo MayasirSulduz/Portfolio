@@ -79,7 +79,7 @@
 .timeline-item {
   padding: 24px;
   position: relative;
-  border-left: 3px solid var(--accent);
+  /* border-left: 3px solid var(--accent); */
 }
 
 .timeline-header {

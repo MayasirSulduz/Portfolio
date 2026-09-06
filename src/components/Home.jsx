@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faArrowRight, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faVolumeHigh, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import avatarImg from "../assets/Hi.png";
 import audioFile from "../assets/SiddavatamSulduz.mp3";
 import "../styling/Home.css";
@@ -29,7 +29,7 @@ function Home() {
             }
         });
     }, []);
-    
+
     return (
         <section id="home" className="home-section">
             <div className="home-container container">
@@ -43,7 +43,7 @@ function Home() {
 
                     <div className="name-container">
                         <h1 className="hero-name">Siddavatam Sulduz</h1>
-                        <button 
+                        <button
                             className={`pronunciation-btn ${isPlaying ? 'playing' : ''}`}
                             onClick={playPronunciation}
                             title="Click to hear name pronunciation"
@@ -68,19 +68,19 @@ function Home() {
                         <a href="#projects" className="btn btn-outline">
                             View Projects
                         </a>
-                        <a 
-                            href="https://github.com/MayasirSulduz" 
-                            target="_blank" 
-                            rel="noreferrer" 
+                        <a
+                            href="https://github.com/MayasirSulduz"
+                            target="_blank"
+                            rel="noreferrer"
                             className="btn btn-social"
                             title="GitHub Profile"
                         >
                             GitHub
                         </a>
-                        <a 
-                            href="https://www.linkedin.com/in/mayasir-sulduz" 
-                            target="_blank" 
-                            rel="noreferrer" 
+                        <a
+                            href="https://www.linkedin.com/in/mayasir-sulduz"
+                            target="_blank"
+                            rel="noreferrer"
                             className="btn btn-social"
                             title="LinkedIn Profile"
                         >

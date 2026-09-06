@@ -28,12 +28,12 @@ function App() {
                     <Contact />
                 </main>
 
-                {/* Standalone Interactive Features */}
-                <AIChatAssistant />
                 <HuskyModelViewer
                     isOpen={isHuskyViewerOpen}
                     onClose={() => setIsHuskyViewerOpen(false)}
                 />
+
+                <AIChatAssistant />
 
                 <footer className="footer-bar">
                     <div className="container footer-content">

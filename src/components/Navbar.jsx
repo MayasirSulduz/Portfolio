@@ -46,14 +46,12 @@ const Navbar = ({ onOpenHuskyViewer }) => {
           aria-label="Toggle theme"
           title={
             theme === "dark-theme"
-              ? "Switch to Cyberpunk Overdrive Mode ⚡"
-              : theme === "cyber-theme"
               ? "Switch to Light Mode ☀️"
               : "Switch to Dark Mode 🌙"
           }
         >
           <span className="icon">
-            {theme === "dark-theme" ? "🌙" : theme === "cyber-theme" ? "⚡" : "☀️"}
+            {theme === "dark-theme" ? "🌙" : "☀️"}
           </span>
         </button>
       </div>
