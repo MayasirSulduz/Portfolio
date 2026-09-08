@@ -201,3 +201,30 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 600px) {
+  .contact-grid {
+    gap: 24px;
+  }
+
+  .info-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .info-text p {
+    overflow-wrap: anywhere;
+  }
+
+  .form-card {
+    padding: 22px 18px;
+  }
+
+  .copy-toast {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    padding: 10px 16px;
+    text-align: center;
+  }
+}

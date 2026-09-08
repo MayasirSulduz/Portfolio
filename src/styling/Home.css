@@ -281,3 +281,66 @@
         height: 240px;
     }
 }
+
+@media (max-width: 600px) {
+    .home-section {
+        min-height: auto;
+        padding-top: 112px;
+        padding-bottom: 56px;
+    }
+
+    .home-container {
+        gap: 32px;
+    }
+
+    .hero-badge {
+        max-width: 100%;
+        padding: 6px 12px;
+        font-size: 0.78rem;
+        text-align: center;
+    }
+
+    .intro-text {
+        font-size: 1.2rem;
+    }
+
+    .hero-name {
+        font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+
+    .name-container {
+        gap: 10px;
+    }
+
+    .pronunciation-btn {
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+    }
+
+    .hero-role {
+        font-size: 1.35rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        gap: 12px;
+    }
+
+    .btn {
+        padding: 11px 16px;
+        font-size: 0.9rem;
+    }
+
+    .btn-social {
+        padding: 11px 14px;
+    }
+
+    .avatar-card, .avatar-glow {
+        width: min(240px, 70vw);
+        height: min(240px, 70vw);
+    }
+}

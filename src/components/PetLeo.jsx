@@ -335,7 +335,7 @@ export default function PetLeo() {
 
         if (isRunning) {
           const dir = new THREE.Vector3().subVectors(targetPos, leoGroup.position).normalize();
-          const runSpeed = 10.5;
+          const runSpeed = 3;
 
           leoGroup.position.addScaledVector(dir, Math.min(distToTarget, runSpeed * delta));
           leoGroup.position.x = THREE.MathUtils.clamp(leoGroup.position.x, bounds.minX, bounds.maxX);
@@ -353,7 +353,7 @@ export default function PetLeo() {
           huskyModel.position.y = 0;
 
           // Leg strides
-          animPhase += delta * 26;
+          animPhase += delta * 14;
           const stride = Math.sin(animPhase) * 0.72;
 
           if (legFR) legFR.rotation.x = stride;

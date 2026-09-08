@@ -169,3 +169,27 @@
     order: -1;
   }
 }
+
+@media (max-width: 600px) {
+  .about-text-content {
+    gap: 20px;
+  }
+
+  .about-card,
+  .timeline-item,
+  .illustration-card {
+    padding: 20px;
+  }
+
+  .about-text {
+    font-size: 0.98rem;
+  }
+
+  .timeline-company {
+    font-size: 1.05rem;
+  }
+
+  .timeline-details li {
+    font-size: 0.9rem;
+  }
+}

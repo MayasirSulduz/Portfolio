@@ -101,6 +101,24 @@
   .husky-modal-body {
     grid-template-columns: 1fr;
   }
+
+  .husky-modal-overlay {
+    padding: 0.75rem;
+  }
+
+  .husky-modal-header {
+    padding: 1rem;
+  }
+
+  .husky-modal-body {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .husky-viewport-container {
+    height: min(55vh, 360px);
+    min-height: 260px;
+  }
 }
 
 .husky-viewport-container {

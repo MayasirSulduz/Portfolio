@@ -104,3 +104,19 @@
     order: -1;
   }
 }
+
+@media (max-width: 600px) {
+  .skills-grid-container {
+    gap: 24px;
+  }
+
+  .skills-illustration-card,
+  .skill-category-card {
+    padding: 20px;
+  }
+
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
