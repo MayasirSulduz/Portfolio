@@ -58,7 +58,7 @@ function Home() {
                     </h2>
 
                     <p className="hero-description">
-                        Front-End Developer at <strong>Tata Consultancy Services (TCS)</strong> specializing in building responsive, accessible, and high-performance web applications using React, JavaScript, and modern web UI technologies.
+                        Front-End Developer at <strong>Tata Consultancy Services (TCS)</strong>, building clean, user-focused interfaces and dependable web applications with React, JavaScript, and modern UI technologies.
                     </p>
 
                     <div className="hero-buttons">

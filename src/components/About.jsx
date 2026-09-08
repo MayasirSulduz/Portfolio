@@ -13,15 +13,15 @@ function About() {
                         <div className="about-card glass-card">
                             <h3 className="about-heading">Who I Am</h3>
                             <p className="about-text">
-                                I am a dedicated Front-End Developer with a strong focus on building modern, high-performance, and user-centric web applications.
+                                I am a dedicated Front-End Developer passionate about building clean, user-focused web interfaces. I enjoy turning complex requirements into clear, accessible, and dependable experiences.
                             </p>
                             <p className="about-text">
-                                I thrive on solving complex UI challenges, optimizing web performance, and delivering clean, maintainable code using React and modern frontend technology ecosystems.
+                                I bring a practical approach to problem-solving, debugging, testing, and product improvement. I work independently and collaboratively in fast-paced environments, always learning better ways to build and ship reliable software.
                             </p>
 
                             <div className="about-highlights">
                                 <div className="highlight-item">
-                                    <span className="highlight-number">1.5+</span>
+                                    <span className="highlight-number">3+</span>
                                     <span className="highlight-label">Years Experience</span>
                                 </div>
                                 <div className="highlight-item">
@@ -50,9 +50,9 @@ function About() {
                                             <span className="timeline-date">Sept 2023 — Present</span>
                                         </div>
                                         <ul className="timeline-details">
-                                            <li>Engineering responsive, accessible React interfaces for enterprise applications.</li>
-                                            <li>Streamlining state management and API integration to ensure seamless data flow.</li>
-                                            <li>Performing rigorous code reviews, unit testing, and UI debugging for high quality delivery.</li>
+                                            <li>Contributing to UI development, testing, debugging, and product improvements for enterprise applications.</li>
+                                            <li>Building responsive React interfaces and integrating APIs for dependable data-driven workflows.</li>
+                                            <li>Supporting quality delivery through unit testing, analysis, and close collaboration with cross-functional teams.</li>
                                         </ul>
                                     </div>
                                 </div>

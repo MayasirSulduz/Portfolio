@@ -6,12 +6,12 @@ function Skills() {
         frontend: {
             title: "Frontend Development",
             icon: "⚡",
-            skills: ["HTML5", "CSS3", "JavaScript (ES6+)", "React.js", "Redux", "Vite"]
+            skills: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript", "TypeScript", "React.js", "Redux", "Vite"]
         },
         backend: {
             title: "Backend & Vision",
             icon: "🐍",
-            skills: ["Python", "Flask", "OpenCV", "NumPy"]
+            skills: ["Python", "Flask", "Node.js", "OpenCV", "NumPy"]
         },
         dataVisualization: {
             title: "Data & Dashboards",
@@ -21,12 +21,12 @@ function Skills() {
         database: {
             title: "Database Systems",
             icon: "🗄️",
-            skills: ["MySQL", "MongoDB"]
+            skills: ["MySQL", "MongoDB", "PostgreSQL", "SQLite"]
         },
         otherSkills: {
             title: "Tools & DevOps",
             icon: "🛠️",
-            skills: ["API Integration", "Debugging", "Unit Testing", "Azure CI/CD", "Git & GitHub", "Docker"]
+            skills: ["API Integration", "Debugging", "Unit Testing", "Azure CI/CD", "Git & GitHub", "Docker", "Kubernetes"]
         },
         softSkills: {
             title: "Soft Skills",
