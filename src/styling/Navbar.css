@@ -181,12 +181,31 @@ body:not(.dark-theme) .navbar .sky-particle {
 }
 
 .nav-links li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-family: var(--font-heading);
   text-decoration: none;
   color: var(--nav-text);
   font-size: 1.05rem;
   font-weight: 500;
   transition: color 0.2s ease;
+}
+
+.navbar-doodle-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.82;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-links li:hover .navbar-doodle-icon {
+  transform: rotate(-5deg) translateY(-1px);
 }
 
 .nav-links li {
@@ -397,6 +416,11 @@ body:not(.dark-theme) .navbar .sky-particle {
 
   .nav-links li a {
     font-size: 1.3rem;
+  }
+
+  .navbar-doodle-icon {
+    width: 23px;
+    height: 23px;
   }
 
   .nav-cta-li,

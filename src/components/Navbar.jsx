@@ -2,6 +2,7 @@ import { useState, useContext, useMemo, useRef, useEffect } from "react";
 import "../styling/Navbar.css";
 import { ThemeContext } from "../context/Theme.jsx";
 import { usePet } from "../context/PetContext.jsx";
+import NavbarDoodleIcon from "./NavbarDoodleIcon.jsx";
 
 const Navbar = ({ onOpenHuskyViewer }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -153,19 +154,19 @@ const Navbar = ({ onOpenHuskyViewer }) => {
 
         {/* SECOND NAV ITEM: Home */}
         <li onClick={() => setMenuOpen(false)}>
-          <a href="#home">Home</a>
+          <a href="#home"><NavbarDoodleIcon name="home" />Home</a>
         </li>
         <li onClick={() => setMenuOpen(false)}>
-          <a href="#about">About</a>
+          <a href="#about"><NavbarDoodleIcon name="about" />About</a>
         </li>
         <li onClick={() => setMenuOpen(false)}>
-          <a href="#skills">Skills</a>
+          <a href="#skills"><NavbarDoodleIcon name="skills" />Skills</a>
         </li>
         <li onClick={() => setMenuOpen(false)}>
-          <a href="#projects">Projects</a>
+          <a href="#projects"><NavbarDoodleIcon name="projects" />Projects</a>
         </li>
         <li onClick={() => setMenuOpen(false)}>
-          <a href="#contact">Contact</a>
+          <a href="#contact"><NavbarDoodleIcon name="contact" />Contact</a>
         </li>
         <li className="nav-cta-li" onClick={() => setMenuOpen(false)}>
           <a href="#contact" className="nav-resume-btn">

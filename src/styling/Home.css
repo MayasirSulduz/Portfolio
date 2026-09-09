@@ -9,6 +9,8 @@
 }
 
 .home-container {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     align-items: center;
