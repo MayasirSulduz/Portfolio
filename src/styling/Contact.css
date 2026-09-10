@@ -27,16 +27,38 @@
 }
 
 .info-icon {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
-  background: var(--badge-bg);
-  color: var(--accent);
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
   flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-theme .info-icon {
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.info-card:hover .info-icon {
+  transform: scale(1.08);
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px var(--accent-glow);
+}
+
+.contact-gif-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 2px;
+  display: block;
 }
 
 .info-text h3 {

@@ -21,10 +21,11 @@
 
 .skills-img {
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   height: auto;
   object-fit: contain;
   margin-bottom: 24px;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
 }
 
 .skills-banner h3 {
@@ -50,18 +51,61 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.skill-category-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px var(--accent-glow);
 }
 
 .category-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-bottom: 12px;
+  gap: 16px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--border-color);
 }
 
-.category-icon {
-  font-size: 1.5rem;
+/* Light / Dark Theme Adaptive GIF Wrapper */
+.category-gif-wrapper {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-theme .category-gif-wrapper {
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.skill-category-card:hover .category-gif-wrapper {
+  transform: scale(1.08);
+  border-color: var(--accent);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.category-gif-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 2px;
+  display: block;
 }
 
 .category-title {

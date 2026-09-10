@@ -69,7 +69,7 @@ function Contact() {
                     <div className="contact-info-column">
                         <div className="info-card glass-card" onClick={() => copyToClipboard("shaiksulduz238@gmail.com", "Email")}>
                             <div className="info-icon">
-                                <InboxIcon />
+                                <img src="/email_contact.gif" alt="Email Icon" className="contact-gif-icon" />
                             </div>
                             <div className="info-text">
                                 <h3>Email</h3>
@@ -80,7 +80,7 @@ function Contact() {
 
                         <div className="info-card glass-card">
                             <div className="info-icon">
-                                <LocationAlt2Icon />
+                                <img src="/location_contact.gif" alt="Location Icon" className="contact-gif-icon" />
                             </div>
                             <div className="info-text">
                                 <h3>Location</h3>

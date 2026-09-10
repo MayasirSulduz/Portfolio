@@ -5,32 +5,32 @@ function Skills() {
     const skillsData = {
         frontend: {
             title: "Frontend Development",
-            icon: "⚡",
+            iconGif: "/Frontend_development_sq.gif",
             skills: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript", "TypeScript", "React.js", "Redux", "Vite"]
         },
         backend: {
             title: "Backend & Vision",
-            icon: "🐍",
+            iconGif: "/backend_vision.gif",
             skills: ["Python", "Flask", "Node.js", "OpenCV", "NumPy"]
         },
         dataVisualization: {
             title: "Data & Dashboards",
-            icon: "📊",
+            iconGif: "/data_dashboards.gif",
             skills: ["Streamlit", "Gradio", "Grafana", "Prometheus"]
         },
         database: {
             title: "Database Systems",
-            icon: "🗄️",
+            iconGif: "/database_systems.gif",
             skills: ["MySQL", "MongoDB", "PostgreSQL", "SQLite"]
         },
         otherSkills: {
             title: "Tools & DevOps",
-            icon: "🛠️",
+            iconGif: "/tools_devops.gif",
             skills: ["API Integration", "Debugging", "Unit Testing", "Azure CI/CD", "Git & GitHub", "Docker", "Kubernetes"]
         },
         softSkills: {
             title: "Soft Skills",
-            icon: "💡",
+            iconGif: "/soft_skills.gif",
             skills: ["Problem Solving", "Communication", "Team Collaboration", "Quick Learner", "Time Management"]
         }
     };
@@ -54,7 +54,13 @@ function Skills() {
                         {Object.entries(skillsData).map(([key, category]) => (
                             <div key={key} className="skill-category-card glass-card">
                                 <div className="category-header">
-                                    <span className="category-icon">{category.icon}</span>
+                                    <div className="category-gif-wrapper">
+                                        <img 
+                                            src={category.iconGif} 
+                                            alt={category.title} 
+                                            className="category-gif-icon" 
+                                        />
+                                    </div>
                                     <h3 className="category-title">{category.title}</h3>
                                 </div>
                                 <div className="skill-badges-container">
