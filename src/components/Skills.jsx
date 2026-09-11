@@ -1,36 +1,41 @@
+import { useContext } from "react";
+import { ThemeContext } from "../context/Theme.jsx";
 import skillsImg from "../assets/skills.png";
 import "../styling/Skills.css";
 
 function Skills() {
+    const { theme } = useContext(ThemeContext);
+    const isDark = theme === "dark-theme";
+
     const skillsData = {
         frontend: {
             title: "Frontend Development",
-            iconGif: "/Frontend_development_sq.gif",
+            iconGif: isDark ? "/frontend_dark.gif" : "/frontend_light.gif",
             skills: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript", "TypeScript", "React.js", "Redux", "Vite"]
         },
         backend: {
             title: "Backend & Vision",
-            iconGif: "/backend_vision.gif",
+            iconGif: isDark ? "/backend_dark.gif" : "/backend_light.gif",
             skills: ["Python", "Flask", "Node.js", "OpenCV", "NumPy"]
         },
         dataVisualization: {
             title: "Data & Dashboards",
-            iconGif: "/data_dashboards.gif",
+            iconGif: isDark ? "/data_dark.gif" : "/data_light.gif",
             skills: ["Streamlit", "Gradio", "Grafana", "Prometheus"]
         },
         database: {
             title: "Database Systems",
-            iconGif: "/database_systems.gif",
+            iconGif: isDark ? "/database_dark.gif" : "/database_light.gif",
             skills: ["MySQL", "MongoDB", "PostgreSQL", "SQLite"]
         },
         otherSkills: {
             title: "Tools & DevOps",
-            iconGif: "/tools_devops.gif",
+            iconGif: isDark ? "/tools_dark.gif" : "/tools_light.gif",
             skills: ["API Integration", "Debugging", "Unit Testing", "Azure CI/CD", "Git & GitHub", "Docker", "Kubernetes"]
         },
         softSkills: {
             title: "Soft Skills",
-            iconGif: "/soft_skills.gif",
+            iconGif: isDark ? "/softskills_dark.gif" : "/softskills_light.gif",
             skills: ["Problem Solving", "Communication", "Team Collaboration", "Quick Learner", "Time Management"]
         }
     };
