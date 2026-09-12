@@ -163,9 +163,6 @@ const Navbar = ({ onOpenHuskyViewer }) => {
           <a href="#skills"><NavbarDoodleIcon name="skills" />Skills</a>
         </li>
         <li onClick={() => setMenuOpen(false)}>
-          <a href="#projects"><NavbarDoodleIcon name="projects" />Projects</a>
-        </li>
-        <li onClick={() => setMenuOpen(false)}>
           <a href="#contact"><NavbarDoodleIcon name="contact" />Contact</a>
         </li>
         <li className="nav-cta-li" onClick={() => setMenuOpen(false)}>
