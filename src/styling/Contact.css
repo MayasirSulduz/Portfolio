@@ -1,3 +1,4 @@
+/* styling css*/
 .contact-section {
   background: var(--bg);
   position: relative;
@@ -192,6 +193,7 @@ body.dark-theme .info-icon {
 }
 
 /* Copy Toast */
+
 .copy-toast {
   position: fixed;
   bottom: 30px;
