@@ -13,7 +13,7 @@ const knowledgeBase = [
     },
     {
         keywords: ["contact", "email", "phone", "hire", "reach", "location"],
-        answer: "You can send an email to shaiksulduz238@gmail.com, call +91 9493662836, or connect on LinkedIn. Located in Whitefield, Bengaluru, Karnataka, India!"
+        answer: "You can send an email to shaiksulduz238@gmail.com, connect on LinkedIn. Located in Whitefield, Bengaluru, Karnataka, India!"
     },
     {
         keywords: ["project", "projects", "portfolio", "built", "workshowcase"],

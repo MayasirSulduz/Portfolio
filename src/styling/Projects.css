@@ -42,11 +42,36 @@
 }
 
 .project-card {
-  padding: 30px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-video-wrapper {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: var(--bg);
+  border: 1px solid var(--border-color);
+  aspect-ratio: 16 / 9;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-video {
+  transform: scale(1.03);
 }
 
 @media (max-width: 600px) {
