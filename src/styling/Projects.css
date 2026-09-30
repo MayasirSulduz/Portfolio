@@ -139,3 +139,30 @@
   color: var(--badge-text);
   font-weight: 500;
 }
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 18px;
+}
+
+.project-demo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #FFFFFF !important;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-demo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px var(--accent-glow);
+}

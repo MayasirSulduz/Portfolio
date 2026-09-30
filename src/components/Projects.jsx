@@ -81,6 +81,20 @@ function ProjectVideoCard({ project }) {
                     <span key={idx} className="tech-badge">{t}</span>
                 ))}
             </div>
+
+            {project.demo && project.demo !== "#" && (
+                <div className="project-actions">
+                    <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-demo-btn"
+                    >
+                        <span>Live Demo</span>
+                        <FontAwesomeIcon icon={faExternalLinkAlt} size="xs" />
+                    </a>
+                </div>
+            )}
         </div>
     );
 }
@@ -97,7 +111,7 @@ function Projects() {
             tech: ["React", "TypeScript", "Node", "Postgres", "HTML5", "CSS3"],
             video: onlineClipboardVideo,
             github: "https://github.com/MayasirSulduz/onlineClipboard",
-            demo: "#"
+            demo: "https://online-clipboard-woad.vercel.app/"
         },
         {
             id: 2,
@@ -107,7 +121,7 @@ function Projects() {
             tech: ["React", "TypeScript", "Tailwind", "Node", "Automation", "REST API"],
             video: testCaseGeneratorVideo,
             github: "https://github.com/MayasirSulduz/TestCaseGenerator",
-            demo: "#"
+            demo: "https://aitestcasegen.vercel.app/"
         },
         {
             id: 3,
