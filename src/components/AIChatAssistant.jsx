@@ -4,20 +4,24 @@ import "../styling/AIChatAssistant.css";
 
 const knowledgeBase = [
     {
+        keywords: ["who", "sulduz", "about", "her", "she", "bio", "developer"],
+        answer: "Sulduz is a skilled Front-End Developer at TCS. She specializes in building clean, responsive React interfaces and delivering high-quality web applications."
+    },
+    {
         keywords: ["tcs", "role", "experience", "work", "job", "tata"],
-        answer: "Front-End Developer at Tata Consultancy Services (TCS) since September 2023. Specialized in building responsive React UIs, performance optimization, and unit testing."
+        answer: "Front-End Developer at Tata Consultancy Services (TCS) since September 2023. She specializes in building responsive React UIs, performance optimization, and unit testing."
     },
     {
         keywords: ["skills", "stack", "tech", "react", "python", "frontend"],
-        answer: "Proficient in React, Redux, JavaScript (ES6+), HTML5, CSS3, Python, Flask, OpenCV, Streamlit, Grafana, MySQL, MongoDB, Docker, and Azure CI/CD."
+        answer: "Her core technical stack includes React, Redux, JavaScript (ES6+), HTML5, CSS3, Python, Flask, OpenCV, Streamlit, Grafana, MySQL, MongoDB, Docker, and Azure CI/CD."
     },
     {
         keywords: ["contact", "email", "phone", "hire", "reach", "location"],
-        answer: "You can send an email to shaiksulduz238@gmail.com, connect on LinkedIn. Located in Whitefield, Bengaluru, Karnataka, India!"
+        answer: "You can reach out to her via email at shaiksulduz238@gmail.com or connect on LinkedIn. She is located in Whitefield, Bengaluru, Karnataka, India!"
     },
     {
         keywords: ["project", "projects", "portfolio", "built", "workshowcase"],
-        answer: "Experience includes building real-time Grafana/Prometheus analytics dashboards, Python OpenCV image processing apps, and high-performance glassmorphic React applications."
+        answer: "Her experience includes building real-time Grafana/Prometheus analytics dashboards, Python OpenCV image processing apps, and high-performance glassmorphic React applications."
     }
 ];
 
